@@ -40,7 +40,7 @@ class About extends Component {
             )
         };
         return (
-            <ScrollView>
+            <ScrollView contentContainerStyle={{paddingBottom: 10}}>
                 <History />
                 <Card title='Corporate Leadership'>
                     <FlatList 
