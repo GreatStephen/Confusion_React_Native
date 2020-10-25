@@ -8296,10 +8296,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
-react-native-elements@^1.0.0-beta8:
-  version "1.0.0-beta8"
-  resolved "https://registry.npm.taobao.org/react-native-elements/download/react-native-elements-1.0.0-beta8.tgz#b0a648453298c1dfc473ab39c4755108d2400aee"
-  integrity sha1-sKZIRTKYwd/Ec6s5xHVRCNJACu4=
+react-native-elements@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/react-native-elements/download/react-native-elements-1.0.0.tgz#95bc194f61ec4658d8dbd977524f8c4fd3ada136"
+  integrity sha1-lbwZT2HsRljY29l3Uk+MT9OtoTY=
   dependencies:
     color "^3.1.0"
     hoist-non-react-statics "^3.1.0"

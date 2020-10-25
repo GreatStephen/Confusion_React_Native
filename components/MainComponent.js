@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Menu from './MenuComponent';
 import Home from './HomeComponent';
+import Contact from './ContactComponent';
+import About from './AboutComponent';
 import Dishdetail from './DishdetailComponent';
 import {View, Platform} from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'; // createStackNavigator has been deleted from react-navigation v4.0 and moved into react-navigation-stack
@@ -39,6 +41,34 @@ const HomeNavigator = createStackNavigator({
   }
 });
 
+const AboutNavigator = createStackNavigator({
+  About: { screen: About }
+}, {
+  navigationOptions: {
+    headerStyle: {
+        backgroundColor: "#512DA8"
+    },
+    headerTitleStyle: {
+        color: "#fff"            
+    },
+    headerTintColor: "#fff"  
+  }
+});
+
+const ContactNavigator = createStackNavigator({
+  Contact: { screen: Contact }
+}, {
+  navigationOptions: {
+    headerStyle: {
+        backgroundColor: "#512DA8"
+    },
+    headerTitleStyle: {
+        color: "#fff"            
+    },
+    headerTintColor: "#fff"  
+  }
+});
+
 const MainNavigator = createDrawerNavigator({
   Home: 
     { screen: HomeNavigator,
@@ -53,15 +83,32 @@ const MainNavigator = createDrawerNavigator({
         title: 'Menu',
         drawerLabel: 'Menu'
       }
+    },
+  About:
+    {
+      screen: AboutNavigator,
+      navigationOptions: {
+        title: 'About Us',
+        drawerLabel: 'About'
+      }
+    },
+  Contact:
+    {
+      screen: ContactNavigator,
+      navigationOptions: {
+        title: 'Contact',
+        drawerLabel: 'Contact'
+      }
     }
+
 }, {
   drawerBackgroundColor: '#D1C4E9'
 });
 
 // from react-navigation v3.0, createStackNavigator is never wrapped by a 'navigation container'
 // MUST declare a container manually
-const MenuN = createAppContainer(MenuNavigator);
-const HomeN = createAppContainer(HomeNavigator);
+// const MenuN = createAppContainer(MenuNavigator);
+// const HomeN = createAppContainer(HomeNavigator);
 const MainN = createAppContainer(MainNavigator);
 
 class Main extends Component {
