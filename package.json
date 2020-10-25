@@ -16,11 +16,13 @@
     "react-native": "0.63.3",
     "react-native-elements": "^1.0.0-beta8",
     "react-native-gesture-handler": "^1.8.0",
+    "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.11.0",
     "react-native-scripts": "1.14.0",
     "react-native-vector-icons": "^7.1.0",
     "react-navigation": "^4.4.2",
+    "react-navigation-drawer": "^2.5.2",
     "react-navigation-stack": "^2.8.4",
     "react-test-render": "^1.1.2"
   },
