@@ -77,7 +77,7 @@ class Dishdetail extends Component {
     render () {
         const dishId = this.props.navigation.getParam('dishId', '');
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{paddingBottom: 10}}>
                 <RenderDish dish={this.state.dishes[+dishId]}
                     favorite={this.state.favorites.some(el => el===dishId)}
                     onPress={() => this.markFavorite(dishId)} />
