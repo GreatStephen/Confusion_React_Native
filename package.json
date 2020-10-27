@@ -10,10 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^3.0.4",
     "@react-native-community/masked-view": "^0.1.10",
     "jest-expo": "27.0.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-datepicker": "^1.7.2",
     "react-native-elements": "1.0.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-reanimated": "^1.13.1",
