@@ -8323,6 +8323,13 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
+react-native-animatable@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.npm.taobao.org/react-native-animatable/download/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"
+  integrity sha1-tft2V+j27a28JmlwV6Mn+5ILMDk=
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-datepicker@^1.7.2:
   version "1.7.2"
   resolved "https://registry.npm.taobao.org/react-native-datepicker/download/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
