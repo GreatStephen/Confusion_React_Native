@@ -3,11 +3,10 @@ import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal, Aler
 import { Card } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker' // new version of datetimepicker
 import * as Animatable from 'react-native-animatable';
+// import { Permissions, Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
-// import { Permissions, Notifications } from 'expo';
-
-
+import * as Calendar from 'expo-calendar';
 
 class Reservation extends Component {
 
@@ -20,7 +19,6 @@ class Reservation extends Component {
             date: new Date(),
             show: false,
             mode: 'date'
-            // showModal: false
         }
     }
 
@@ -29,8 +27,6 @@ class Reservation extends Component {
     };
 
     handleReservation() {
-        // console.log(JSON.stringify(this.state));
-        // this.toggleModal();
         Alert.alert(
             'Your Reservation OK?',
             'Number of Guests: '+ this.state.guests + '\nSmoking? ' + this.state.smoking + '\nDate and Time: ' + this.state.date.toISOString(),
@@ -38,9 +34,8 @@ class Reservation extends Component {
             {text: 'Cancel', onPress: () => {this.resetForm();}, style: 'cancel'},
             {text: 'OK', onPress: () => {
                 this.presentLocalNotification(this.state.date);
-                this.resetForm();
-                }
-            },
+                this.addReservationToCalendar(this.state.date);
+                this.resetForm();}},
             ],
             { cancelable: false }
         );
@@ -53,9 +48,47 @@ class Reservation extends Component {
             date: new Date(),
             show: false,
             mode: 'date'
-            // showModal: false
         });
 
+    }
+
+    async obtainCalendarPermission() {
+        let permission = await Permissions.getAsync(Permissions.CALENDAR);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.CALENDAR);
+            if (permission.status !== 'granted'){
+                Alert.alert('Permission not granted to add calendar events');
+            }
+        }
+        return permission;
+    }
+
+    async addReservationToCalendar(date) {
+        await this.obtainCalendarPermission();
+        const startDate = new Date(date);
+        const endDate = new Date(date);
+        endDate.setHours(startDate.getHours() + 2);
+
+        // MUST create a new calendar to add a new event
+        const newCalendarId = await Calendar.createCalendarAsync({
+            title: 'Expo Calendar',
+            color: 'blue',
+            source: {
+                isLocalAccount: true,
+                name: 'Me'
+            },
+            name: 'Me',
+            ownerAccount: 'Me',
+            accessLevel: Calendar.CalendarAccessLevel.CONTRIBUTOR
+        });
+        console.log(newCalendarId);
+        await Calendar.createEventAsync(newCalendarId, {
+            title: 'Con Fusion Table Reservation',
+            startDate: startDate,
+            endDate: endDate,
+            location: '121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong',
+            timeZone: 'Asia/Hong_Kong'
+        });
     }
 
     async obtainNotificationPermission() {
@@ -71,17 +104,23 @@ class Reservation extends Component {
 
     async presentLocalNotification(date) {
         await this.obtainNotificationPermission();
-        Notifications.presentLocalNotificationAsync({
-            title: 'Your Reservation',
-            body: 'Reservation for '+ date + ' requested',
-            ios: {
-                sound: true
-            },
-            android: {
+        // MUST set a notification handler to define how the device will react to the notification
+        Notifications.setNotificationHandler({
+            handleNotification: async () => ({
+              shouldShowAlert: true,
+              shouldPlaySound: true,
+              shouldSetBadge: true,
+            }),
+          });
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Your Reservation',
+                body: 'Reservation for '+ date + ' requested',
                 sound: true,
                 vibrate: true,
                 color: '#512DA8'
-            }
+            },
+            trigger: null
         });
     }
 
@@ -94,10 +133,6 @@ class Reservation extends Component {
         this.setState({show:true});
         this.setState({mode: 'time'});
     };
-
-    // toggleModal() {
-    //     this.setState({showModal: !this.state.showModal});
-    // }
     
     render() {
         return(
@@ -158,27 +193,6 @@ class Reservation extends Component {
                             accessibilityLabel="Learn more about this purple button"
                             />
                     </View>
-
-                    {/* <Modal
-                        animationType={'slide'}
-                        transparent={false} 
-                        visible={this.state.showModal}
-                        onDismiss={() => {this.toggleModal(); this.resetForm()}}
-                        onRequestClose={() => {this.toggleModal(); this.resetForm()}}>
-                        
-                        <View style={styles.Modal}>
-                            <Text style={styles.modalTitle}>Your Reservation</Text>
-                            <Text style={styles.modalText}>Number of Guests: {this.state.guests}</Text>
-                            <Text style={styles.modalText}>Smoking? : {this.state.smoking? 'Yes':'No'}</Text>
-                            <Text style={styles.modalText}>Date and Time : {this.state.date.toISOString()}</Text>
-                            <Button 
-                                onPress = {() =>{this.toggleModal(); this.resetForm();}}
-                                color="#512DA8"
-                                title="Close" 
-                                />
-                        </View>
-
-                    </Modal> */}
                 </Animatable.View>
             </ScrollView>
         );

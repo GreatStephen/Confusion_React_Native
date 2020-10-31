@@ -169,6 +169,24 @@ class RegisterTab extends Component {
         this.setState({imageUrl: processedImage.uri });
 
     }
+
+    getImageFromGallery = async() => {
+        const cameraRollPermission = await ImagePicker.requestCameraRollPermissionsAsync();
+        if (cameraRollPermission.status === 'granted') {
+
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });          
+            
+            if (!result.cancelled) {
+                console.log(result);
+                this.processImage(result.uri);
+            }
+        }
+    }
     
     static navigationOptions = {
         title: 'Register',
@@ -202,6 +220,11 @@ class RegisterTab extends Component {
                     <Button
                         title="Camera"
                         onPress={this.getImageFromCamera}
+                        />
+                    <Button
+                        buttonStyle={{marginLeft: 20}}
+                        title="Gallery"
+                        onPress={this.getImageFromGallery}
                         />
                 </View>
                 <Input
